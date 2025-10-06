@@ -38,6 +38,12 @@ class AddressController {
         return addressRepo.save(book);
     }
 
+    @GetMapping("/addressbooks/{bookid}/buddies")
+    Iterable<BuddyInfo> getAllBuddies(@PathVariable Integer bookid) {
+        AddressBook book = addressRepo.findById(bookid)
+                .orElseThrow(() -> new AddressBookNotFoundException(bookid));
+        return book.getBuddyInfos();
+    }
 
     @DeleteMapping("/addressbooks/{bookid}/buddies/{buddyid}")
     AddressBook removeBuddy(@PathVariable Integer bookid, @PathVariable Integer buddyid) {
